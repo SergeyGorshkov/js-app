@@ -9,6 +9,7 @@ export function renderPost(post, options = {}) {
   const button = candidate
     ? `<button class="button-round button-small button-info" title="Удалить из избранного" data-id="${post.id}" data-title="${post.title}">Избранное</button>`
     : `<button class="button-round button-small button-primary" title="Добавить в избранное" data-id="${post.id}" data-title="${post.title}">Избранное</button>`;
+  const btnDelete = `<button id="delete" class="button-round button-small button-danger" data-id="${post.id}" data-title="${post.title}">Удалить</button>`;  
 
   return `
     <div class="panel">
@@ -23,7 +24,7 @@ export function renderPost(post, options = {}) {
       </div>
       <div class="panel-footer w-panel-footer">
         <small>${post.date}</small>
-        <button id="delete" class="button-round button-small button-danger" data-id="${post.id}">Удалить</button>
+        ${options.withButton ? btnDelete : ''}
         ${options.withButton ? button : ''}
       </div>
     </div>

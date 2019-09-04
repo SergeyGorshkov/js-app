@@ -31,17 +31,21 @@ export class PostsComponent extends Component {
 function buttonHandler(event) {
   const $el = event.target;
   const { id, title } = $el.dataset;
-  
+  let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  const candidate = favorites.find(p => p.id === id);
+
   if($el.id) {
+    if (!confirm(`Вы действительно хотите удалить пост "${title}"?`)) {
+      return;
+    }
+    favorites = favorites.filter(p => p.id !== id);
     apiService.fetchDeleteById(id);
     this.posts = this.posts.filter(p => p.id !== id);
     const html = this.posts.map(post => renderPost(post, {withButton: true}));
     this.$el.innerHTML = '';
     this.$el.insertAdjacentHTML('afterbegin', html.join(' '));
+    localStorage.setItem('favorites', JSON.stringify(favorites));
   } else if (id) {
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    const candidate = favorites.find(p => p.id === id);
-    
     if (candidate) {
       // удалить элемент
       // $el.textContent = 'Сохранить';
