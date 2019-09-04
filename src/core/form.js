@@ -5,7 +5,7 @@ export class Form {
   }
 
   value() {
-    const value = {}
+    const value = {};
     Object.keys(this.controls).forEach(control => {
       value[control] = this.form[control].value;
     })
@@ -19,14 +19,14 @@ export class Form {
   }
 
   isValid() {
-    let isFormValid = true
+    let isFormValid = true;
 
     Object.keys(this.controls).forEach(control => {
       const validators = this.controls[control];
 
       let isValid = true
       validators.forEach(validator => {
-        isValid = validator(this.form[control].value) && isValid
+        isValid = validator(this.form[control].value) && isValid;
       });
 
       isValid ? clearError(this.form[control]) : setError(this.form[control]);
